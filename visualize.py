@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 
 import torchvision.transforms as transforms
 import torchvision.models as models
-
+import sys
 import copy
-
+from io import BytesIO
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -20,8 +20,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # desired size of the output image
 imsize = 1024 if torch.cuda.is_available() else 128  # use small size if no gpu
 
-# importing vgg-16 pre-trained model
-cnn = models.vgg19(pretrained=True).features.to(device).eval()
 
 ############## IMAGE #################
 
@@ -29,13 +27,13 @@ loader = transforms.Compose([
     transforms.Resize(imsize),  # scale imported image
     transforms.ToTensor()])  # transform it into a torch tensor
 
-from io import BytesIO
 
 def image_loader(image_name):
     image = Image.open(image_name)
     # fake batch dimension required to fit network's input dimensions
     image = loader(image).unsqueeze(0)
     return image.to(device, torch.float)
+
 
 def image_resize(image):
     im = Image.open(BytesIO(image))
@@ -74,7 +72,6 @@ def imshow(tensor, title=None):
 
 
 
-import sys
 def visualize_image(image):
     img = image_resize(image)
 
