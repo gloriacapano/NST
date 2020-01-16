@@ -73,24 +73,17 @@ def imshow(tensor, title=None):
     plt.pause(0.001) # pause a bit so that plots are updated
 
 
-def visualize_images(style, content):
-    style_img = image_resize(style)
-    content_img = image_resize(content)
-
-    print(style_img.size())
-    print(content_img.size())
-    assert style_img.size() == content_img.size(), \
-        "we need to import style and content images of the same size"
-
-    plt.figure()
-    imshow(style_img, title='Style Image')
-
-    plt.figure()
-    imshow(content_img, title='Content Image')
-    return None
 
 import sys
-def main():
-     style = sys.argv[0]
-     content = sys.argv[1]
-     visualize_images(style, content)
+def visualize_image(image):
+    img = image_resize(image)
+
+    print(style_img.size())
+
+    plt.figure()
+    imgshow(img)
+
+
+if __name__ == '__main__':
+     image = sys.argv[0]
+     visualize_image(image)
